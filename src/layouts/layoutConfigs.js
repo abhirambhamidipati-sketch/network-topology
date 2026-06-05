@@ -1,51 +1,97 @@
 /**
- * Cytoscape layout configurations.
+ * Cytoscape layout configurations for all graph states.
  *
- * PHASE1_LAYOUT uses dagre (top-to-bottom DAG) for the backbone topology.
- * Future layouts (for expanded sub-graphs, overview, etc.) are stubs here
- * so Phase 2 only needs to pick one rather than define from scratch.
+ * Layout tiers:
+ *   PHASE1_LAYOUT   — initial 6-node backbone view (dagre TB)
+ *   EXPANDED_LAYOUT — full hierarchy with compound parent containers
+ *   DEVICE_LAYOUT   — tighter spacing for dense device-level graphs
+ *   FALLBACK_LAYOUT — breadthfirst (built-in, no plugin required)
  */
 
+/**
+ * Initial Phase 1 layout: 6 top-level group nodes in a clean top-to-bottom DAG.
+ */
 export const PHASE1_LAYOUT = {
-  name: 'dagre',
-  rankDir: 'TB',       // top → bottom
-  rankSep: 110,        // vertical gap between levels
-  nodeSep: 80,         // horizontal gap between siblings
-  edgeSep: 20,
-  padding: 80,
-  fit: true,
-  animate: true,
+  name:              'dagre',
+  rankDir:           'TB',
+  rankSep:           110,
+  nodeSep:           80,
+  edgeSep:           20,
+  padding:           80,
+  fit:               true,
+  animate:           true,
   animationDuration: 400,
-  animationEasing: 'ease-out',
+  animationEasing:   'ease-out',
 };
 
 /**
- * Used when re-running layout after expansion in Phase 2.
- * Slightly tighter spacing to handle more nodes.
+ * Used after first-level group expansion (sub-groups visible).
+ * Slightly tighter than Phase 1 to handle more nodes gracefully.
  */
 export const EXPANDED_LAYOUT = {
-  name: 'dagre',
-  rankDir: 'TB',
-  rankSep: 90,
-  nodeSep: 60,
-  edgeSep: 15,
-  padding: 60,
-  fit: true,
-  animate: true,
+  name:              'dagre',
+  rankDir:           'TB',
+  rankSep:           90,
+  nodeSep:           65,
+  edgeSep:           15,
+  padding:           60,
+  fit:               true,
+  animate:           true,
   animationDuration: 500,
-  animationEasing: 'ease-in-out',
+  animationEasing:   'ease-in-out',
+};
+
+/**
+ * Compact layout for device-level expansions where many leaf nodes appear.
+ * Tighter spacing prevents the graph from growing too large.
+ */
+export const DEVICE_LAYOUT = {
+  name:              'dagre',
+  rankDir:           'TB',
+  rankSep:           70,
+  nodeSep:           48,
+  edgeSep:           12,
+  padding:           50,
+  fit:               true,
+  animate:           true,
+  animationDuration: 450,
+  animationEasing:   'ease-in-out',
 };
 
 /**
  * Breadth-first fallback — built into Cytoscape, no plugin required.
- * Useful if dagre plugin is unavailable.
+ * Activated if dagre plugin is unavailable or throws.
  */
 export const FALLBACK_LAYOUT = {
-  name: 'breadthfirst',
-  directed: true,
-  spacingFactor: 2.0,
-  padding: 80,
-  fit: true,
-  animate: true,
+  name:            'breadthfirst',
+  directed:        true,
+  spacingFactor:   2.0,
+  padding:         80,
+  fit:             true,
+  animate:         true,
   animationDuration: 400,
 };
+
+/**
+ * Selects the appropriate layout config based on the maximum expansion level
+ * currently active in the graph.
+ *
+ * Args:
+ *   maxLevel (number): Highest node level currently visible (0, 1, or 2).
+ *
+ * Returns:
+ *   Object: Cytoscape layout configuration.
+ *
+ * Raises:
+ *   None
+ */
+export function ntpl_selectLayout(maxLevel) {
+  try {
+    if (maxLevel >= 2) return DEVICE_LAYOUT;
+    if (maxLevel >= 1) return EXPANDED_LAYOUT;
+    return PHASE1_LAYOUT;
+  } catch (error) {
+    console.error('[ntpl_selectLayout] Falling back to PHASE1_LAYOUT:', error);
+    return PHASE1_LAYOUT;
+  }
+}
