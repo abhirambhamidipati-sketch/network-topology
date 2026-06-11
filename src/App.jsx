@@ -12,14 +12,12 @@ import './styles/app.css';
  *   ┌─────────────────────────────────────┐
  *   │              TopBar (54px)          │
  *   ├───────────────────────┬─────────────┤
- *   │                       │             │
- *   │     Graph Canvas      │ Right Panel │
- *   │     (flex: 1)         │  (304px)    │
- *   │                       │             │
+ *   │  Graph Canvas         │ Right Panel │
+ *   │  • NetworkGraph       │  320px      │
  *   └───────────────────────┴─────────────┘
  *
  * CytoscapeProvider wraps the body so both NetworkGraph (producer) and
- * RightPanel controls (consumers) share the same cy instance reference.
+ * RightPanel controls (consumers) share the same cy ref.
  */
 export default function App() {
   return (

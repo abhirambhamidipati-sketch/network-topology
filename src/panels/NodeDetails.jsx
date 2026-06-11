@@ -1,6 +1,5 @@
 import React from 'react';
 import useTopologyStore        from '../store/topologyStore';
-import { usePathHighlighter }  from '../hooks/usePathHighlighter';
 import { TYPE_LABELS }         from '../data/topologyData';
 import { ntpl_formatRelativeTime } from '../utils/graphUtils';
 
@@ -56,7 +55,7 @@ export default function NodeDetails() {
  *
  * Args:
  *   id   (string): Node ID.
- *   data (Object): Full Cytoscape node data object.
+ *   data (Object): Enriched Cytoscape node data (includes _degree, _childCount).
  *
  * Returns:
  *   JSX.Element
@@ -66,7 +65,11 @@ export default function NodeDetails() {
  */
 function NodeCard({ id, data }) {
   try {
-    const { type, label, meta, isGroup, level } = data;
+    const {
+      type, label, meta, isGroup, level,
+      _degree = 0, _childCount = 0,
+    } = data;
+
     const typeLabel    = TYPE_LABELS[type] ?? type;
     const status       = meta?.status ?? 'unknown';
     const isExpandable = isGroup || (meta?.deviceCount > 0);
@@ -104,6 +107,18 @@ function NodeCard({ id, data }) {
               value={`${meta.deviceCount} device${meta.deviceCount !== 1 ? 's' : ''}`}
             />
           )}
+          {_childCount > 0 && (
+            <DetailRow
+              term="Children"
+              value={`${_childCount} group${_childCount !== 1 ? 's' : ''}`}
+            />
+          )}
+          {_degree > 0 && (
+            <DetailRow
+              term="Connections"
+              value={`${_degree} link${_degree !== 1 ? 's' : ''}`}
+            />
+          )}
           {meta?.lastUpdated && (
             <DetailRow
               term="Last Seen"
@@ -111,8 +126,6 @@ function NodeCard({ id, data }) {
             />
           )}
         </dl>
-
-        <NodePathActions nodeId={id} />
 
         {isExpandable && (
           <p className="detail-card__hint">
@@ -165,90 +178,6 @@ function EdgeCard({ data }) {
     console.error('[EdgeCard] Render error:', error);
     return <p className="details-empty">Unable to render edge details.</p>;
   }
-}
-
-// ─── Path action buttons ───────────────────────────────────────────────────
-
-/**
- * Renders "Set as Source" and "Set as Target" path buttons for a node.
- *
- * Args:
- *   nodeId (string): The node ID these buttons act on.
- *
- * Returns:
- *   JSX.Element
- *
- * Raises:
- *   None
- */
-function NodePathActions({ nodeId }) {
-  const { ntpl_setPathSource, ntpl_setPathTarget } = usePathHighlighter();
-  const pathSourceId = useTopologyStore((s) => s.pathSourceId);
-  const pathTargetId = useTopologyStore((s) => s.pathTargetId);
-
-  const isSource = pathSourceId === nodeId;
-  const isTarget = pathTargetId === nodeId;
-
-  /**
-   * Handles setting current node as path source.
-   *
-   * Args:
-   *   None
-   *
-   * Returns:
-   *   void
-   *
-   * Raises:
-   *   None
-   */
-  const ntpl_handleSetSource = () => {
-    try {
-      ntpl_setPathSource(nodeId);
-    } catch (error) {
-      console.error('[ntpl_handleSetSource] Error:', error);
-    }
-  };
-
-  /**
-   * Handles setting current node as path target.
-   *
-   * Args:
-   *   None
-   *
-   * Returns:
-   *   void
-   *
-   * Raises:
-   *   None
-   */
-  const ntpl_handleSetTarget = () => {
-    try {
-      ntpl_setPathTarget(nodeId);
-    } catch (error) {
-      console.error('[ntpl_handleSetTarget] Error:', error);
-    }
-  };
-
-  return (
-    <div className="detail-card__actions">
-      <button
-        type="button"
-        className={`path-btn path-btn--source${isSource ? ' path-btn--active' : ''}`}
-        onClick={ntpl_handleSetSource}
-        title="Set as path source"
-      >
-        {isSource ? '✓ Source' : 'Set Source'}
-      </button>
-      <button
-        type="button"
-        className={`path-btn path-btn--target${isTarget ? ' path-btn--active' : ''}`}
-        onClick={ntpl_handleSetTarget}
-        title="Set as path target"
-      >
-        {isTarget ? '✓ Target' : 'Set Target'}
-      </button>
-    </div>
-  );
 }
 
 // ─── Shared sub-components ─────────────────────────────────────────────────

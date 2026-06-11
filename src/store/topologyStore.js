@@ -128,12 +128,16 @@ const useTopologyStore = create((set, get) => ({
   // ── Filters ───────────────────────────────────────────────────────────────
 
   filters: {
-    'cloud-group':   true,
-    'router-group':  true,
-    'switch-group':  true,
-    'server-group':  true,
-    'laptop-group':  true,
-    'desktop-group': true,
+    'cloud-group':    true,
+    'vpn-group':      true,
+    'firewall-group': true,
+    'router-group':   true,
+    'switch-group':   true,
+    'server-group':   true,
+    'laptop-group':   true,
+    'desktop-group':  true,
+    'mobile-group':   true,
+    'guest-group':    true,
   },
 
   /**
@@ -309,7 +313,9 @@ const useTopologyStore = create((set, get) => ({
 
   // ── Loading / async state ─────────────────────────────────────────────────
 
-  isExpanding: false,
+  isExpanding:  false,
+  isCyReady:    false,
+  isDataLoaded: false,
 
   /**
    * Toggle the expansion loading flag.
@@ -325,6 +331,127 @@ const useTopologyStore = create((set, get) => ({
    */
   setExpanding: (value) =>
     set({ isExpanding: value }),
+
+  /**
+   * Mark the Cytoscape instance as initialised.
+   *
+   * Args:
+   *   value (boolean): True once setCy() has been called.
+   *
+   * Returns:
+   *   void
+   *
+   * Raises:
+   *   None
+   */
+  setCyReady: (value) =>
+    set({ isCyReady: value }),
+
+  /**
+   * Mark topology data as loaded into the graph.
+   *
+   * Args:
+   *   value (boolean): True once elements have been added to Cytoscape.
+   *
+   * Returns:
+   *   void
+   *
+   * Raises:
+   *   None
+   */
+  setDataLoaded: (value) =>
+    set({ isDataLoaded: value }),
+
+  // ── Exploration path (drill-down breadcrumb) ─────────────────────────────
+  //
+  // Tracks the hierarchy the user has drilled into via expansion.
+  // Each item is { id: string, label: string }.
+  // Used by TopBar and ntpl_applyFocusMode to drive focus-based LOD rendering.
+
+  explorationPath: [],
+
+  /**
+   * Push a newly-expanded group onto the exploration path.
+   *
+   * Args:
+   *   item ({id: string, label: string}): The group being expanded.
+   *
+   * Returns:
+   *   void
+   *
+   * Raises:
+   *   None
+   */
+  pushExplorationPath: (item) =>
+    set((state) => ({ explorationPath: [...state.explorationPath, item] })),
+
+  /**
+   * Remove a group and all descendants from the exploration path.
+   * Used on single-group collapse: removes `id` and everything after it.
+   *
+   * Args:
+   *   id (string): Group node ID to remove from the path.
+   *
+   * Returns:
+   *   void
+   *
+   * Raises:
+   *   None
+   */
+  removeFromExplorationPath: (id) =>
+    set((state) => {
+      const idx = state.explorationPath.findIndex((item) => item.id === id);
+      if (idx === -1) return state;
+      return { explorationPath: state.explorationPath.slice(0, idx) };
+    }),
+
+  /**
+   * Reset the exploration path to the top level.
+   *
+   * Args:
+   *   None
+   *
+   * Returns:
+   *   void
+   *
+   * Raises:
+   *   None
+   */
+  clearExplorationPath: () => set({ explorationPath: [] }),
+
+  // ── Breadcrumb navigation ─────────────────────────────────────────────────
+
+  breadcrumb: [],
+
+  /**
+   * Set the breadcrumb trail for the currently selected node.
+   *
+   * Args:
+   *   crumbs (Array<{id: string, label: string}>): Ordered chain from root to selection.
+   *
+   * Returns:
+   *   void
+   *
+   * Raises:
+   *   None
+   */
+  setBreadcrumb: (crumbs) =>
+    set({ breadcrumb: crumbs }),
+
+  /**
+   * Clear the breadcrumb trail.
+   *
+   * Args:
+   *   None
+   *
+   * Returns:
+   *   void
+   *
+   * Raises:
+   *   None
+   */
+  clearBreadcrumb: () =>
+    set({ breadcrumb: [] }),
 }));
 
 export default useTopologyStore;

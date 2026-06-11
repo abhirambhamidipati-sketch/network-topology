@@ -14,13 +14,13 @@
 export const PHASE1_LAYOUT = {
   name:              'dagre',
   rankDir:           'TB',
-  rankSep:           110,
-  nodeSep:           80,
+  rankSep:           140,
+  nodeSep:           110,
   edgeSep:           20,
-  padding:           80,
+  padding:           50,
   fit:               true,
   animate:           true,
-  animationDuration: 400,
+  animationDuration: 550,
   animationEasing:   'ease-out',
 };
 
@@ -31,26 +31,25 @@ export const PHASE1_LAYOUT = {
 export const EXPANDED_LAYOUT = {
   name:              'dagre',
   rankDir:           'TB',
-  rankSep:           90,
-  nodeSep:           65,
-  edgeSep:           15,
-  padding:           60,
+  rankSep:           130,
+  nodeSep:           100,
+  edgeSep:           20,
+  padding:           56,
   fit:               true,
   animate:           true,
-  animationDuration: 500,
+  animationDuration: 550,
   animationEasing:   'ease-in-out',
 };
 
 /**
  * Compact layout for device-level expansions where many leaf nodes appear.
- * Tighter spacing prevents the graph from growing too large.
  */
 export const DEVICE_LAYOUT = {
   name:              'dagre',
   rankDir:           'TB',
-  rankSep:           70,
-  nodeSep:           48,
-  edgeSep:           12,
+  rankSep:           90,
+  nodeSep:           64,
+  edgeSep:           14,
   padding:           50,
   fit:               true,
   animate:           true,

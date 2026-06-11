@@ -3,7 +3,7 @@ import SearchBar     from './SearchBar';
 import FilterSection from './FilterSection';
 import GraphControls from './GraphControls';
 import NodeDetails   from './NodeDetails';
-import PathPanel     from './PathPanel';
+import StatsPanel    from './StatsPanel';
 import useTopologyStore from '../store/topologyStore';
 
 /**
@@ -11,13 +11,10 @@ import useTopologyStore from '../store/topologyStore';
  *
  * Sections (top to bottom):
  *   1. SearchBar        — live node search with autocomplete
- *   2. FilterSection    — node type visibility toggles
- *   3. GraphControls    — zoom, fit, expand/collapse
- *   4. NodeDetails      — selected node/edge details + path buttons
- *   5. PathPanel        — path tracing UI
- *
- * The layout is section-based: new sections can be inserted at any position
- * without touching sibling sections.
+ *   2. FilterSection    — 10 node type visibility toggles with device counts
+ *   3. GraphControls    — zoom, fit, collapse all
+ *   4. NodeDetails      — selected node/edge details and insights
+ *   5. StatsPanel       — QWERTY Corp network overview statistics
  *
  * Args:
  *   None
@@ -34,11 +31,7 @@ export default function RightPanel() {
   return (
     <aside className="right-panel" aria-label="Topology controls and details">
       {isExpanding && (
-        <div className="right-panel__loading" aria-live="polite" aria-label="Expanding group">
-          <span className="loading-dot" />
-          <span className="loading-dot" />
-          <span className="loading-dot" />
-        </div>
+        <div className="right-panel__loading" aria-live="polite" aria-label="Expanding group" />
       )}
 
       <div className="right-panel__scroll">
@@ -67,9 +60,7 @@ export default function RightPanel() {
 
         <div className="right-panel__divider" role="separator" />
 
-        <section className="right-panel__section">
-          <PathPanel />
-        </section>
+        <StatsPanel />
 
       </div>
     </aside>

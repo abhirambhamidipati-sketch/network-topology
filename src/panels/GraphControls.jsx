@@ -58,19 +58,12 @@ export default function GraphControls() {
         />
       </div>
 
-      <div className="controls-grid controls-grid--2" style={{ marginTop: 'var(--sp-2)' }}>
+      <div className="controls-grid controls-grid--1" style={{ marginTop: 'var(--sp-2)' }}>
         <ControlButton
           onClick={ntpl_collapseAllGroups}
           icon={<CollapseIcon />}
-          label="Collapse All"
+          label="Collapse All Groups"
           title="Collapse all expanded groups"
-        />
-        <ControlButton
-          onClick={() => {}}
-          icon={<ExpandIcon />}
-          label="Expand All"
-          title="Expand all top-level groups (available after first expansion)"
-          disabled
         />
       </div>
 
@@ -180,15 +173,6 @@ function CollapseIcon() {
       <rect x="9"   y="1.5" width="5.5" height="5.5" rx="1" stroke="currentColor" strokeWidth="1.3"/>
       <rect x="1.5" y="9"   width="5.5" height="5.5" rx="1" stroke="currentColor" strokeWidth="1.3"/>
       <rect x="9"   y="9"   width="5.5" height="5.5" rx="1" stroke="currentColor" strokeWidth="1.3"/>
-    </svg>
-  );
-}
-function ExpandIcon() {
-  return (
-    <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="2" y="2" width="12" height="12" rx="1.5" stroke="currentColor" strokeWidth="1.3"/>
-      <line x1="8" y1="5" x2="8" y2="11" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
-      <line x1="5" y1="8" x2="11" y2="8" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
     </svg>
   );
 }

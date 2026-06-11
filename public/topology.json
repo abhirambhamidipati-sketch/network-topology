@@ -1,0 +1,261 @@
+{
+  "version": "1.0",
+  "source": "qwerty-corp-cmdb",
+  "generatedAt": "2026-06-10T00:00:00Z",
+  "nodes": [
+    {
+      "id": "cloud",
+      "label": "Cloud / Internet",
+      "displayLabel": "Cloud / Internet\n3 providers",
+      "type": "cloud-group",
+      "isGroup": true,
+      "level": 0,
+      "meta": {
+        "description": "External cloud providers and internet connectivity",
+        "deviceCount": 3,
+        "status": "healthy",
+        "ip": "0.0.0.0/0",
+        "region": "Global",
+        "lastUpdated": "2026-06-10T08:00:00Z",
+        "os": "N/A",
+        "role": "External Connectivity"
+      }
+    },
+    {
+      "id": "vpn-gateway",
+      "label": "VPN Gateway",
+      "displayLabel": "VPN Gateway\n2 appliances",
+      "type": "vpn-group",
+      "isGroup": true,
+      "level": 0,
+      "meta": {
+        "description": "IPSec / SSL VPN gateway cluster for remote access",
+        "deviceCount": 2,
+        "status": "healthy",
+        "ip": "172.16.0.0/24",
+        "region": "HQ",
+        "lastUpdated": "2026-06-10T07:50:00Z",
+        "os": "Palo Alto PAN-OS 11.1",
+        "role": "Remote Access VPN"
+      }
+    },
+    {
+      "id": "firewall-group",
+      "label": "Firewall Layer",
+      "displayLabel": "Firewall Layer\n6 appliances",
+      "type": "firewall-group",
+      "isGroup": true,
+      "level": 0,
+      "meta": {
+        "description": "Perimeter, internal, and DMZ firewall appliances",
+        "deviceCount": 6,
+        "status": "healthy",
+        "ip": "10.0.0.0/24",
+        "region": "HQ",
+        "lastUpdated": "2026-06-10T07:45:00Z",
+        "os": "Palo Alto PAN-OS / Cisco ASA",
+        "role": "Network Security"
+      }
+    },
+    {
+      "id": "router-group",
+      "label": "Core Router Layer",
+      "displayLabel": "Core Router Layer\n7 routers",
+      "type": "router-group",
+      "isGroup": true,
+      "level": 0,
+      "meta": {
+        "description": "Core WAN/LAN routers and branch office routers",
+        "deviceCount": 7,
+        "status": "healthy",
+        "ip": "10.0.1.0/24",
+        "region": "Global",
+        "lastUpdated": "2026-06-10T07:30:00Z",
+        "os": "Cisco IOS XE 17.9",
+        "role": "Network Routing"
+      }
+    },
+    {
+      "id": "switch-group",
+      "label": "Core Switch Layer",
+      "displayLabel": "Core Switch Layer\n14 switches",
+      "type": "switch-group",
+      "isGroup": true,
+      "level": 0,
+      "meta": {
+        "description": "Distribution and access layer switches across all sites",
+        "deviceCount": 14,
+        "status": "healthy",
+        "ip": "10.0.2.0/24",
+        "region": "Global",
+        "lastUpdated": "2026-06-10T07:35:00Z",
+        "os": "Cisco NX-OS / IOS",
+        "role": "Layer-2 Switching"
+      }
+    },
+    {
+      "id": "server-group",
+      "label": "Server Network",
+      "displayLabel": "Server Network\n27 servers",
+      "type": "server-group",
+      "isGroup": true,
+      "level": 0,
+      "meta": {
+        "description": "All server infrastructure: web, app, DB, AD, mail, file, monitoring, backup",
+        "deviceCount": 27,
+        "status": "healthy",
+        "ip": "10.1.0.0/20",
+        "region": "Primary DC",
+        "lastUpdated": "2026-06-10T08:10:00Z",
+        "os": "Linux / Windows Server",
+        "role": "Application Hosting"
+      }
+    },
+    {
+      "id": "laptop-group",
+      "label": "Laptop Network",
+      "displayLabel": "Laptop Network\n312 devices",
+      "type": "laptop-group",
+      "isGroup": true,
+      "level": 0,
+      "meta": {
+        "description": "Enterprise laptops across 6 global regions",
+        "deviceCount": 312,
+        "status": "healthy",
+        "ip": "10.10.0.0/16",
+        "region": "Multi-Region",
+        "lastUpdated": "2026-06-10T06:00:00Z",
+        "os": "macOS 15 / Windows 11",
+        "role": "End User Device"
+      }
+    },
+    {
+      "id": "desktop-group",
+      "label": "Desktop Network",
+      "displayLabel": "Desktop Network\n148 devices",
+      "type": "desktop-group",
+      "isGroup": true,
+      "level": 0,
+      "meta": {
+        "description": "Fixed workstations across 4 global regions",
+        "deviceCount": 148,
+        "status": "healthy",
+        "ip": "10.20.0.0/16",
+        "region": "Multi-Region",
+        "lastUpdated": "2026-06-10T06:00:00Z",
+        "os": "Windows 11 Pro",
+        "role": "End User Device"
+      }
+    },
+    {
+      "id": "mobile-group",
+      "label": "Mobile Network",
+      "displayLabel": "Mobile Network\n287 devices",
+      "type": "mobile-group",
+      "isGroup": true,
+      "level": 0,
+      "meta": {
+        "description": "iOS and Android managed mobile devices (MDM enrolled)",
+        "deviceCount": 287,
+        "status": "healthy",
+        "ip": "10.30.0.0/16",
+        "region": "Multi-Region",
+        "lastUpdated": "2026-06-10T06:30:00Z",
+        "os": "iOS 17 / Android 14",
+        "role": "Mobile Device"
+      }
+    },
+    {
+      "id": "guest-group",
+      "label": "Guest Network",
+      "displayLabel": "Guest Network\n24 active",
+      "type": "guest-group",
+      "isGroup": true,
+      "level": 0,
+      "meta": {
+        "description": "Isolated guest WiFi VLAN — no internal access",
+        "deviceCount": 24,
+        "status": "healthy",
+        "ip": "10.40.0.0/16",
+        "region": "Multi-Site",
+        "lastUpdated": "2026-06-10T07:00:00Z",
+        "os": "N/A",
+        "role": "Guest Isolation"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e-cloud-vpn",
+      "source": "cloud",
+      "target": "vpn-gateway",
+      "edgeType": "backbone",
+      "bandwidth": "10 Gbps",
+      "protocol": "BGP / IPSec"
+    },
+    {
+      "id": "e-vpn-fw",
+      "source": "vpn-gateway",
+      "target": "firewall-group",
+      "edgeType": "backbone",
+      "bandwidth": "10 Gbps",
+      "protocol": "IPSec"
+    },
+    {
+      "id": "e-fw-router",
+      "source": "firewall-group",
+      "target": "router-group",
+      "edgeType": "backbone",
+      "bandwidth": "10 Gbps",
+      "protocol": "OSPF"
+    },
+    {
+      "id": "e-router-switch",
+      "source": "router-group",
+      "target": "switch-group",
+      "edgeType": "backbone",
+      "bandwidth": "10 Gbps",
+      "protocol": "OSPF"
+    },
+    {
+      "id": "e-switch-server",
+      "source": "switch-group",
+      "target": "server-group",
+      "edgeType": "backbone",
+      "bandwidth": "10 Gbps",
+      "protocol": "Ethernet"
+    },
+    {
+      "id": "e-switch-laptop",
+      "source": "switch-group",
+      "target": "laptop-group",
+      "edgeType": "backbone",
+      "bandwidth": "1 Gbps",
+      "protocol": "Ethernet / Wi-Fi 6"
+    },
+    {
+      "id": "e-switch-desktop",
+      "source": "switch-group",
+      "target": "desktop-group",
+      "edgeType": "backbone",
+      "bandwidth": "1 Gbps",
+      "protocol": "Ethernet"
+    },
+    {
+      "id": "e-switch-mobile",
+      "source": "switch-group",
+      "target": "mobile-group",
+      "edgeType": "backbone",
+      "bandwidth": "600 Mbps",
+      "protocol": "Wi-Fi 6"
+    },
+    {
+      "id": "e-switch-guest",
+      "source": "switch-group",
+      "target": "guest-group",
+      "edgeType": "backbone",
+      "bandwidth": "100 Mbps",
+      "protocol": "Wi-Fi 6 (isolated)"
+    }
+  ]
+}
